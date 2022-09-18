@@ -179,3 +179,7 @@ INSERT INTO public.statuses (name) VALUES ('WAITING PAY'::text) returning id;
 INSERT INTO public.statuses (name) VALUES ('PAID'::text) returning id;
 INSERT INTO public.statuses (name) VALUES ('IN PROCESS'::text) returning id;
 INSERT INTO public.statuses (name) VALUES ('CANCELED'::text) returning id;
+
+INSERT INTO public.print_types (name) VALUES ('BOOK'::text) returning id;
+INSERT INTO public.print_types (name) VALUES ('BROCHURE'::text) returning id;
+INSERT INTO public.print_types (name) VALUES ('ADVERTISING BOOKLET'::text) returning id;

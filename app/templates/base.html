@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div class = 'header'>
+            <a href = '/'>
+            <img class = 'logo' src="/static/logo.png">
+            </a>
+            <form class = 'search'>
+                <input type="search" class = 'search' name="search" placeholder="Введите ваш запрос"> 
+                <input type="submit" class = 'search' value="Найти">
+            </form>
+            <nav class = 'links'>
+                <a class = 'link' href="/printHouses.html">Типографии</a>
+                <a class = 'link' href="/contacts.html">Контакты</a>
+                <a class = 'link' href="/about.html">О нас</a>
+                <a class = 'link' href="/login.html">Войти</a>
+            </nav>
+        </div>
+    </header>
+    {% block content %}
+    
+    {% endblock %}
+    <footer>
+        <p>Нелли Камалян - 2022</p>
+    </footer>
+    <script src='/static/script.js'></script>
+</body>
+</html>
+
