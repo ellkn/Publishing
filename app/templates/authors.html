@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} ELL_KN - authors {% endblock %}
+
+{% block content %}
+    <div class = 'authors'>
+        {% for author in authors %}
+        <div class = "author">
+            <p class = "infoHeader"> {{author[1]}} </p>
+            {% if author [3] != None %}
+                {{author[3]}}
+                {%else%}
+                <p class = "photo">Фотография отсутствует </p>
+            {% endif %}
+            <div class = 'info'>{{author[2]}}</div>
+        </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

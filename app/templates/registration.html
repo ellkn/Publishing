@@ -2,5 +2,16 @@
 {% block title %} ELL_KN - registration{% endblock %}
 
 {% block content %}
-    re
+<div class = "registration">
+    <h4>Регистрация</h4>
+    <form name = 'login' action = '' methods = 'POST'>
+        <p><input class = 'input' type="text" name="name" placeholder = 'Имя'></p>
+        <p><input class = 'input' type="text" name="lastname" placeholder = 'Фамилия'></p>
+        <p><input class = 'input' type="email" name="email" placeholder = 'Email'></p>
+        <p><input class = 'input' type="password" name="password" placeholder = 'Password'></p>
+       <p> <input type = 'submit' class = "input" value = 'Зарегистрироваться'></p>
+    </form>
+    <p><a class = 'link' href="/login">Войти</a>
+    <a class = 'link' href="/changePassword">Забыли пароль</a></p>
+</div>
 {% endblock %}

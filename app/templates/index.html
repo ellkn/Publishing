@@ -2,5 +2,17 @@
 {% block title %} ELL_KN {% endblock %}
 
 {% block content %}
-    CONTENT
+    <div class = "content">
+        {% for item in content %}
+        <div class = "publication">
+            <p class = "infoHeader"> {{item[1]}} </p>
+            {{item[2]}}
+            {{item[3]}}
+            {% if item [4] != None %}
+                {{item[4]}}
+            {% endif %}
+            {{item[6]}} {{ item[7]}}
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

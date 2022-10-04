@@ -1,63 +1,142 @@
-header{
+header {
     background-color: rgb(110, 173, 110);
     padding: 1ex;
     margin: 0;
     margin-bottom: 1ex;
     width: 100%;
 }
-.header{
+
+.header {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
 }
-footer{
+
+footer {
     background-color: rgb(110, 173, 110);
     text-align: center;
     padding: 1ex;
     margin: 0;
-    position:fixed;
-    left:0;
-    bottom:0;
+    left: 0;
     width: 100%;
+    position: relative;
 }
-.links{
+
+.links {
     display: block;
     box-sizing: border-box;
     margin-right: 3ex;
 }
-.link{  
+
+.link {
     font-weight: bold;
     text-decoration: none;
     color: rgb(0, 0, 0);
     margin-left: 2ex;
     white-space: nowrap;
 }
+
 .link:hover {
     color: #ffffff;
-    background-color:rgb(13, 57, 13);
+    background-color: rgb(13, 57, 13);
     border-radius: 1ex;
-    padding:1ex;
+    padding: 1ex;
     transition: all 0.1s linear;
 }
-.logo{
+
+.logo {
     width: 20ex;
     border-radius: 2ex;
+    margin-left: 2ex;
 }
-body{
-    background-color: rgb(234, 255, 227);
-    color: rgb(17, 52, 32);
-    padding-bottom: 5ex;
-    margin:0
+
+body {
+    background-color: rgb(110, 173, 110);
+    margin: 0
 }
-.search{
+
+.search {
     border-radius: 2ex;
     font-weight: bold;
+    margin: 1ex
 }
-.search:hover{
+
+.search:hover {
     border-radius: 2ex;
     border-color: rgb(234, 255, 227);
 }
-.about{
+
+.about {
     word-wrap: break-word;
     margin: 5ex;
+}
+
+.author, .authorization, .registration {
+    border-radius: 2ex;
+    background: white;
+    display: inline-block;
+    width: 50ex;
+    height: 50ex;
+    margin: 5ex;
+    padding: 4ex;
+    box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    text-align: center;
+}
+
+.author:hover{
+    color: #ffffff;
+    background-color: rgb(13, 57, 13);
+}
+
+.authorization, .registration{
+    font-size: 2.5ex;
+    width: 40ex;
+    height: 40ex;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+.authorization:hover,  .registration:hover  {
+    color: #ffffff;
+    background-color: rgb(29, 83, 29);
+}
+.registration {
+    height: 50ex;   
+}
+
+.infoHeader {
+    text-align: center;
+    font-weight: bold;
+    font-size: 4ex;
+}
+.info{
+    width: 50ex;
+    height: 30ex;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  scrollbar-color: hsl(0 0% 50%);
+}
+.go_to_top {
+    position: fixed;
+    right: 1ex;
+    bottom: 3ex;
+    background: rgb(13, 57, 13);
+    display: inline-block;
+    color: white;
+    font-size: 2ex;
+    padding: 0 1ex;
+    line-height: 5ex;
+    text-align: center;
+    z-index: 100;
+    border-radius: 3ex;
+}
+
+.input{
+    border-radius: 2ex;
+    padding: 1ex;
+    font-weight: bold;
+}
+.input:hover {
+    border-radius: 2ex;
+    border-color: rgb(234, 255, 227);
 }

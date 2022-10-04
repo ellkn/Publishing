@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.users
     firstname text NOT NULL,
     email text NOT NULL,
     password text NOT NULL,
-    role integer NOT NULL DEFAULT 1,
+    role integer NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT email UNIQUE (email)
 );
@@ -30,14 +30,16 @@ CREATE TABLE IF NOT EXISTS public.typographys
     name text NOT NULL,
     address text NOT NULL,
     phone text NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT phone UNIQUE (phone)
 );
 
 CREATE TABLE IF NOT EXISTS public.authors
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
-    user_id integer NOT NULL,
+    name text NOT NULL,
     info text,
+    photopath text,
     PRIMARY KEY (id)
 );
 
@@ -63,6 +65,7 @@ CREATE TABLE IF NOT EXISTS public.orders
     date_in date,
     date_out date,
     status_id integer,
+    price money,
     PRIMARY KEY (id)
 );
 
@@ -78,6 +81,7 @@ CREATE TABLE IF NOT EXISTS public.print_types
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
     name text NOT NULL,
+    price money NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -88,17 +92,20 @@ CREATE TABLE IF NOT EXISTS public.statuses
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.information
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name text NOT NULL,
+    text text NOT NULL,
+    date date NOT NULL,
+    photopath text,
+    admin_id integer,
+    PRIMARY KEY (id)
+);
+
 ALTER TABLE IF EXISTS public.users
     ADD CONSTRAINT role_id FOREIGN KEY (role)
     REFERENCES public.roles (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-
-ALTER TABLE IF EXISTS public.authors
-    ADD CONSTRAINT user_id FOREIGN KEY (user_id)
-    REFERENCES public.users (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
@@ -168,6 +175,15 @@ ALTER TABLE IF EXISTS public.order_takers
     NOT VALID;
 
 
+ALTER TABLE IF EXISTS public.information
+    ADD FOREIGN KEY (admin_id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+
 -- ЗАПОЛНЕНИЕ
 INSERT INTO public.roles (role) VALUES ('USER'::text) returning id;
 INSERT INTO public.roles (role) VALUES ('ADMIN'::text) returning id;
@@ -180,6 +196,7 @@ INSERT INTO public.statuses (name) VALUES ('PAID'::text) returning id;
 INSERT INTO public.statuses (name) VALUES ('IN PROCESS'::text) returning id;
 INSERT INTO public.statuses (name) VALUES ('CANCELED'::text) returning id;
 
-INSERT INTO public.print_types (name) VALUES ('BOOK'::text) returning id;
-INSERT INTO public.print_types (name) VALUES ('BROCHURE'::text) returning id;
-INSERT INTO public.print_types (name) VALUES ('ADVERTISING BOOKLET'::text) returning id;
+
+INSERT INTO public.print_types (name, price) VALUES ('BOOK'::text, '150'::money) returning id;
+INSERT INTO public.print_types (name, price) VALUES ('BROCHURE'::text, '100'::money) returning id;
+INSERT INTO public.print_types (name, price) VALUES ('ADVERTISING BOOKLET'::text, '120'::money) returning id;

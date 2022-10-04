@@ -1,4 +1,5 @@
 import psycopg2
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def getData(query):
@@ -8,10 +9,11 @@ def getData(query):
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
-        cursor.close()
         return rows
     except Exception as ex:
         print(ex)
+    finally:
+        connection.close()
 
 
 def setData(query):
@@ -20,6 +22,16 @@ def setData(query):
                                       dbname='pHouse', port=5432)
         cursor = connection.cursor()
         cursor.execute(query)
-        cursor.close()
+        connection.commit()
     except Exception as ex:
         print(ex)
+    finally:
+        connection.close()
+        
+def checkUser(login, password):
+    pass
+
+def createUser(login, password):
+    generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
+    pass
+
