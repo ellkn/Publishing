@@ -1,6 +1,6 @@
+from flask import flash
 import psycopg2
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 def getData(query):
     try:
@@ -31,7 +31,13 @@ def setData(query):
 def checkUser(login, password):
     pass
 
-def createUser(login, password):
-    generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
-    pass
-
+def createUser(login, password, firstname, lastname, role ):
+    password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
+    print(password_hash)
+    try:
+        setData(f'INSERT INTO users (lastname, firstname, email, password, role) VALUES {lastname, firstname, login, password_hash, role}')
+        flash('Пользователь успешно добавлен!')
+    except Exception as error:
+        flash('Пользователь с таким email существует!')
+        print(error)
+        

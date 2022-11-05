@@ -2,16 +2,25 @@
 {% block title %} ELL_KN - registration{% endblock %}
 
 {% block content %}
-<div class = "registration">
-    <h4>Регистрация</h4>
-    <form name = 'login' action = '' methods = 'POST'>
-        <p><input class = 'input' type="text" name="name" placeholder = 'Имя'></p>
-        <p><input class = 'input' type="text" name="lastname" placeholder = 'Фамилия'></p>
-        <p><input class = 'input' type="email" name="email" placeholder = 'Email'></p>
-        <p><input class = 'input' type="password" name="password" placeholder = 'Password'></p>
-       <p> <input type = 'submit' class = "input" value = 'Зарегистрироваться'></p>
-    </form>
-    <p><a class = 'link' href="/login">Войти</a>
-    <a class = 'link' href="/changePassword">Забыли пароль</a></p>
+<div class = "login">
+    <div class = "registration">
+        <h4>Регистрация</h4>
+        <form name = 'registration' action = '/registration' method = 'POST'>
+            <p><input class = 'input' type="text" name="name" placeholder = 'Имя' minlength = "2" maxlength = "20"></p>
+            <p><input class = 'input' type="text" name="lastname" placeholder = 'Фамилия' minlength = "2" maxlength = "20" ></p>
+            <p><input class = 'input' type="email" name="email" placeholder = 'Email'></p>
+            <p><input class = 'input' type="password" name="password" placeholder = 'Password' minlength = "12"></p>
+            <p>
+                <select name="select">
+                    <option value="1">Пользователь</option>
+                    <option value="3" selected>Организация</option>
+                    <option value="4">Частное лицо</option>
+                </select>
+            </p>
+            <p><input type = 'submit' class = "input" value = 'Зарегистрироваться'></p>
+        </form>
+        <p><a class = 'link' href="/login">Войти</a>
+        <a class = 'link' href="/changePassword">Забыли пароль</a></p>
+    </div>
 </div>
 {% endblock %}

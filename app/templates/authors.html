@@ -6,12 +6,19 @@
         {% for author in authors %}
         <div class = "author">
             <p class = "infoHeader"> {{author[1]}} </p>
-            {% if author [3] != None %}
-                {{author[3]}}
-                {%else%}
-                <p class = "photo">Фотография отсутствует </p>
-            {% endif %}
-            <div class = 'info'>{{author[2]}}</div>
+            <div class = "info">
+                    
+                <div class = "author_photo">
+                    {% if author [3] != None %}
+                    {{author[3]}}
+                    {%else%}
+                    <p class = "photo">Фотография отсутствует </p>
+                    {% endif %}
+                </div>
+                
+                <div class = 'info_text'>{{author[2]}}</div>
+
+            </div>
         </div>
         {% endfor %}
     </div>

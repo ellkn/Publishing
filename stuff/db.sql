@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.users
     firstname text NOT NULL,
     email text NOT NULL,
     password text NOT NULL,
-    role integer NOT NULL DEFAULT 0,
+    role integer NOT NULL DEFAULT 1,
     PRIMARY KEY (id),
     CONSTRAINT email UNIQUE (email)
 );

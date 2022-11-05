@@ -1,25 +1,35 @@
 header {
-    background-color: rgb(110, 173, 110);
-    padding: 1ex;
-    margin: 0;
+    background-color: #10495c;
     margin-bottom: 1ex;
+    width: 100%;
+    position: relative;
+}
+.header {
+    display: flex;
+    padding-top: 2ex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.pagename {
+    height: 20ex;
+    font-weight: bold;
+    font-size: 10ex;
+    text-align: center;
+    color: #ede1d0;
+    width: 100%;
+}
+
+.pagename p {
+    margin: 0;
+    position: relative;
+    top: 40%;
 }
 
 footer {
-    background-color: rgb(110, 173, 110);
+    background-color: #ede1d0;
     text-align: center;
-    padding: 1ex;
-    margin: 0;
-    left: 0;
-    width: 100%;
-    position: relative;
 }
 
 .links {
@@ -31,17 +41,17 @@ footer {
 .link {
     font-weight: bold;
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: #ede1d0;
     margin-left: 2ex;
+    padding: 1ex;
     white-space: nowrap;
 }
 
 .link:hover {
-    color: #ffffff;
-    background-color: rgb(13, 57, 13);
+    color: #10495c;
+    background-color: #ede1d0;
     border-radius: 1ex;
     padding: 1ex;
-    transition: all 0.1s linear;
 }
 
 .logo {
@@ -51,19 +61,32 @@ footer {
 }
 
 body {
-    background-color: rgb(110, 173, 110);
-    margin: 0
+    background-color: #ede1d0;
+    margin: 0;
 }
 
-.search {
+.search_input {
+    border-radius: 1ex;
+    margin: 1ex;
+    width: 50ex;
+}
+
+.search_input:hover {
     border-radius: 2ex;
+    border-color: #ede1d0;
+}
+
+.search_button {
+    border-radius: 1ex;
+    margin: 1ex;
+    width: 15ex;
     font-weight: bold;
-    margin: 1ex
 }
 
-.search:hover {
+.search_button:hover {
     border-radius: 2ex;
-    border-color: rgb(234, 255, 227);
+    border-color: #ede1d0;
+    font-weight: bold;
 }
 
 .about {
@@ -71,9 +94,54 @@ body {
     margin: 5ex;
 }
 
-.author, .authorization, .registration {
+.authors {
+    text-align: center;
+}
+.author{
     border-radius: 2ex;
-    background: white;
+    color: #10495c;
+    box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    padding: 2ex;
+    margin: 6ex;
+}
+.author:hover {
+    color: #ede1d0;
+    background-color: #10495c;
+}
+.infoHeader {
+    text-align: center;
+    font-weight: bold;
+    font-size: 4ex;
+    padding-top: 2ex;
+}
+
+.author_photo{
+    width: 25ex;
+    height: 40ex;
+    margin: 3ex;
+    position: relative;
+}
+
+.info_text {
+    height: 30ex;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(0 0% 50%);
+    position: relative;
+}
+.info{
+    margin-right: 3ex;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+.authorization,
+.registration {
+    border-radius: 2ex;
+    background: #ede1d0;
     display: inline-block;
     width: 50ex;
     height: 50ex;
@@ -83,46 +151,52 @@ body {
     text-align: center;
 }
 
-.author:hover{
-    color: #ffffff;
-    background-color: rgb(13, 57, 13);
+.login{
+    height: 80ex;
+    position: relative;
 }
 
-.authorization, .registration{
+.authorization,
+.registration {
     font-size: 2.5ex;
     width: 40ex;
     height: 40ex;
     display: block;
     margin-left: auto;
-    margin-right: auto
-}
-.authorization:hover,  .registration:hover  {
-    color: #ffffff;
-    background-color: rgb(29, 83, 29);
-}
-.registration {
-    height: 50ex;   
+    margin-right: auto;
 }
 
-.infoHeader {
-    text-align: center;
-    font-weight: bold;
-    font-size: 4ex;
+.authorization .link,
+.registration .link{
+    color: #000;
 }
-.info{
-    width: 50ex;
-    height: 30ex;
-    overflow-y: auto;
-    scrollbar-width: thin;
-  scrollbar-color: hsl(0 0% 50%);
+
+.authorization:hover,
+.registration:hover {
+    color: #ede1d0;
+    background-color: #10495c;
+}
+.authorization:hover .link,
+.registration:hover .link{
+    color:  #ede1d0;
+}
+.authorization:hover .link:hover,
+.registration:hover .link:hover{
+    color: #10495c;
+    background-color: #ede1d0;
+    border-radius: 1ex;
+}
+
+.registration {
+    height: 50ex;
 }
 .go_to_top {
     position: fixed;
     right: 1ex;
     bottom: 3ex;
-    background: rgb(13, 57, 13);
+    background: #10495c;
     display: inline-block;
-    color: white;
+    color: #ede1d0;
     font-size: 2ex;
     padding: 0 1ex;
     line-height: 5ex;
@@ -131,12 +205,32 @@ body {
     border-radius: 3ex;
 }
 
-.input{
+.input {
     border-radius: 2ex;
     padding: 1ex;
     font-weight: bold;
 }
+
 .input:hover {
     border-radius: 2ex;
-    border-color: rgb(234, 255, 227);
+    border-color: #ede1d0;
+}
+.contacts{
+    height: 40ex;
+    color: #10495c;
+    text-align: center;
+    padding-top: 5ex;
+}
+.contacts p{
+    font-size: 3ex;
+}
+.contact{
+    font-weight: bold;
+    text-decoration: none;
+    color: #10495c;
+}
+.map{
+    background-color:#10495c;
+    text-align: center;
+    padding: 1ex;
 }
