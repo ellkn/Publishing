@@ -1,16 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import db as db
-from flask_login import LoginManager
+import user as u
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'super secret'
+app.config['SECRET_KEY'] = 'TOPSECRETKEY'
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return u.UserLogin().dbi(user_id)
 
 
 @app.route('/', methods = ["GET", "POST"])
 def index():
     content = db.getData('SELECT i.*, u.firstname, u.lastname FROM information AS i JOIN users AS u ON i.admin_id = u.id')
-    print(content)
     return render_template('index.html', content = content, title = "ELL_KN")
 
 
@@ -21,13 +28,33 @@ def error():
 
 @app.route('/login', methods = ['POST', 'GET'])
 def logIn():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+    if not current_user.get_id():
+        if request.method == 'POST':
+            user = db.getUserByEmail(request.form.get("email"))
+            if user:
+                if db.checkUser(user['password'], request.form.get("password")):
+                    login_user(u.UserLogin().create(user))
+                    flash("Успешный вход")
+                    redirect("/")
+                else:
+                    flash("Неверный логин или пароль")
+                    return render_template('login.html', title = "АВТОРИЗАЦИЯ")
+            return render_template('login.html', title = "АВТОРИЗАЦИЯ")
         
-        return render_template('login.html')
-    
-    return render_template('login.html', title = "АВТОРИЗАЦИЯ")
+        return render_template('login.html', title = "АВТОРИЗАЦИЯ")
+    else:
+        return redirect("/")
+        
+
+@app.route('/logout')
+@login_required
+def logout():
+    if current_user.get_id():
+        logout_user()
+        return redirect("/login")
+    else:
+        return redirect("/")        
+
 
 @app.route('/registration', methods = ['POST', 'GET'])
 def registration():
@@ -38,7 +65,6 @@ def registration():
         lastname = request.form.get('lastname')
         select = request.form.get('select')
         db.createUser(email, password, name, lastname, select)
-         #СДЕЛАТЬ ОБРАБОТКУ ВЫБОРА РОЛИ НА СТРАНИЦЕ
         return redirect('/login')
     return render_template('registration.html', title = "РЕГИСТРАЦИЯ")
 

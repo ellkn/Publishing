@@ -24,7 +24,11 @@
                 <a class='link' href="/authors">Авторы</a>
                 <a class='link' href="/contacts">Контакты</a>
                 <a class='link' href="/about">О нас</a>
-                <a class='link' href="/login">Войти</a>
+                {% if current_user.is_authenticated %}
+                    <a id="button_a" href="/logout"><button class="enter_button">Logout</button></a>
+                {% else %}
+                    <a class='link' href="/login">Войти</a>
+                {% endif %}
             </nav>
         </div>
         <div class = "pagename">
