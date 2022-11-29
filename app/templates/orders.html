@@ -2,7 +2,18 @@
 {% block title %} ELL_KN - orders {% endblock %}
 
 {% block content %}
-    <div class = 'about'>
-        Заказы
-    </div>
+    {% if role == 'ADMIN'%}
+        <div class = 'about'>
+            {%for item in allOrders%}
+                {{item}}
+            {%endfor%}
+        </div>
+    {%else%}
+        <a href="/createOrder" class="createOrder">Добавить заказ</a>
+        <div class = 'about'>
+            {%for item in myOrders%}
+                {{item}}
+            {%endfor%}
+        </div>
+    {%endif%}
 {% endblock %}

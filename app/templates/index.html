@@ -2,8 +2,11 @@
 {% block title %} ELL_KN {% endblock %}
 
 {% block content %}
+    {% if role == 'ADMIN'%}
+        <a href="/createNews" class="createNews">Добавить публикацию</a>
+    {%endif%}
     <div class = "content">
-        {% for item in content %}
+        {% for item in con %}
         <div class = "publication">
             <p class = "infoHeader"> {{item[1]}} </p>
             {{item[2]}}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} ELL_KN {% endblock %}
+
+{% block content %}
+<div class = "createNews">
+    <h4>Добавление публикации</h4>
+    <form name = 'createNews' action = '/createNews' method = 'POST'>
+        <p><input class = 'input' type="text" name="title" placeholder = 'Заголовок' minlength = "2" maxlength = "20" required></p>
+        <p><input class = 'input' type="textarea" name="post" placeholder = 'Текст' minlength = "2" maxlength = "3000" required></p>
+        <label for="file">Выберите фото</label>
+        <p><input class = 'input' type="file" name="file"></p>
+        <p><input type = 'submit' class = "input" value = 'Создать новость'></p>
+    </form>
+</div>
+{% endblock %}
