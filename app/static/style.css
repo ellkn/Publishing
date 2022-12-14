@@ -13,12 +13,14 @@ header {
 }
 
 .pagename {
-    height: 20ex;
+    height: 12ex;
     font-weight: bold;
-    font-size: 10ex;
+    font-size:xx-large;
     text-align: center;
     color: #ede1d0;
     width: 100%;
+    margin-bottom: 1ex;
+    padding-bottom: 7ex;
 }
 
 .pagename p {
@@ -103,6 +105,9 @@ body {
     box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     padding: 2ex;
     margin: 6ex;
+    width: 80ex;
+    height: 60ex;
+    display: inline-block;
 }
 .author:hover {
     color: #ede1d0;
@@ -135,6 +140,11 @@ body {
     justify-content: space-between;
 }
 
+.infoNews{
+    margin: 3ex;
+    display: flex;
+    justify-content: space-between;
+}
 
 
 
@@ -233,4 +243,63 @@ body {
     background-color:#10495c;
     text-align: center;
     padding: 1ex;
+}
+
+.lightlink {
+    font-weight: bold;
+    text-decoration: none;
+    color: #10495c;
+    margin-left: 2ex;
+    padding: 1ex;
+    white-space: nowrap;
+}
+
+.lightlink:hover {
+    color: #ede1d0;
+    background-color:#10495c;
+    border-radius: 1ex;
+    padding: 1ex;
+}
+
+table {
+	width: 100%;
+    margin-top: 3ex
+    
+}
+thead {
+	font-weight:bold;
+    font-size: 2.5ex;
+	text-align: center;
+	color: #10495c;
+	}
+table tbody td {
+	padding: 2ex;
+	line-height: 0.7ex;
+    font-size: 2ex;
+	color: #444441;
+    text-align: center;
+    border-top: 0.2ex solid #10495c;
+}
+
+.newslink {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    margin-left: 2ex;
+    padding: 1ex;
+    white-space: nowrap;
+}
+.newslink:hover {
+    color: #10495c;
+    background-color: #ede1d0;
+    border-radius: 1ex;
+    padding: 1ex;
+}
+.news{
+    border-radius: 2ex;
+    color: #10495c;
+    box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    padding: 3ex;
+    margin: 3ex;
+    display: inline-block;
 }

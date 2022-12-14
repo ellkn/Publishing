@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} ELL_KN {% endblock %}
+
+{% block content %}
+<form name = 'editUser' action = '/edit/{{user["id"]}}' method = 'POST'>
+    <p><input class = 'input' type="text" name="lastname" value = '{{user["lastname"]}}' minlength = "2" maxlength = "3000" required></p>
+    <p><input class = 'input' type="text" name="firstname" value = '{{user["firstname"]}}'  minlength = "2" maxlength = "3000" required></p>
+    <p><input class = 'input' type="email" name="email" value = '{{user["email"]}}' minlength = "1" maxlength = "3000" required></p>
+    <p><select name = "role">
+        <option value = "-1"> - - -</option>
+        {% for item in role%}
+        <option value = "{{item[0]}}">{{item[1]}}</option>
+        {%endfor%}
+    </select></p>
+    <p><input type = 'submit' class = "input" value = 'Изменить данные пользователя'></p>
+</form>
+{% endblock %}

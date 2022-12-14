@@ -19,13 +19,15 @@
                 <input type="submit" class='search_button' value="Найти">
             </form>
             <nav class='links'>
-                <a class='link' href="/orders">Заказы</a>
+                {% if current_user.is_authenticated and current_user.get_role() == 'ADMIN'%}
+                <a class='link' href="/users">Пользователи</a>
+                {% endif %}
                 <a class='link' href="/printHouses">Типографии</a>
                 <a class='link' href="/authors">Авторы</a>
                 <a class='link' href="/contacts">Контакты</a>
-                <a class='link' href="/about">О нас</a>
                 {% if current_user.is_authenticated %}
-                    <a id="button_a" href="/logout"><button class="link">Logout</button></a>
+                    <a class='link' href="/orders">Заказы</a>
+                    <a id="button_a" class = "link" href="/logout">Выйти</a>
                 {% else %}
                     <a class='link' href="/login">Войти</a>
                 {% endif %}

@@ -2,5 +2,22 @@
 {% block title %} ELL_KN - Publishing House {% endblock %}
 
 {% block content %}
-    tytuytuyt
+    <table class = "typo">
+        <thead>
+            <tr>
+                <td>Типография</td>
+                <td>Адрес</td>
+                <td>Телефон</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%for item in typo%}
+            <tr>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
+                <td>{{item[3]}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
 {% endblock %}

@@ -2,6 +2,9 @@
 {% block title %} ELL_KN - authors {% endblock %}
 
 {% block content %}
+{% if current_user.is_authenticated and current_user.get_role() == 'ADMIN'%}
+<a class='lightlink' href="/createAuthor">Добавить автора</a>
+{% endif %}
     <div class = 'authors'>
         {% for author in authors %}
         <div class = "author">
@@ -16,7 +19,7 @@
                     {% endif %}
                 </div>
                 
-                <div class = 'info_text'>{{author[2]}}</div>
+                <div class = 'info_text'>{{author[2][:500]}} ... <a href="/author/{{author[0]}}" class="newslink">Подробнее</a></div>
 
             </div>
         </div>

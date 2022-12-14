@@ -44,6 +44,12 @@ class UserLogin(UserMixin):
             return self.__user['id']
         else:
             return False
+        
+    def get_role(self):
+        if self.__user:
+            return self.__user['role']
+        else:
+            return False
     
     # def get_reset_password_token(self, expires_in=600):
     #     return jwt.encode(

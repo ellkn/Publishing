@@ -5,16 +5,14 @@
     {% if role == 'ADMIN'%}
         <a href="/createNews" class="createNews">Добавить публикацию</a>
     {%endif%}
-    <div class = "content">
+    <div class = "authors">
         {% for item in con %}
-        <div class = "publication">
+        <div class = "author">
             <p class = "infoHeader"> {{item[1]}} </p>
-            {{item[2]}}
-            {{item[3]}}
-            {% if item [4] != None %}
-                {{item[4]}}
-            {% endif %}
-            {{item[6]}} {{ item[7]}}
+            <div class = "infoNews">
+            {{item[2][:500]}}...
+            </div>
+            <a href="/news/{{item[0]}}" class="newslink">Подробнее</a>
         </div>
         {% endfor %}
     </div>

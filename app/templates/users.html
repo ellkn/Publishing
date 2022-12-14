@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} ELL_KN - admin users {% endblock %}
+
+{% block content %}
+<table class = "users" name = "users">
+
+<thead>
+    <tr>
+        <td>Фамилия</td>
+        <td>Имя</td>
+        <td>Email</td>
+        <td>Роль</td>
+        <td>Действие</td>
+    </tr>
+</thead>
+
+<tbody>
+    {%for item in users%}
+    <tr>
+        <td>{{item[1]}}</td>
+        <td>{{item[2]}}</td>
+        <td>{{item[3]}}</td>
+        <td>{{item[4]}}</td>
+        <td><a class='lightlink' href="/edit/{{item[0]}}">Редактировать</a></td>
+    </tr>
+    {%endfor%}
+</tbody>
+</table>
+{% endblock %}

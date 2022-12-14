@@ -4,6 +4,7 @@ import user as u
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from flask_mail import Mail
 import datetime
+import logging
 #import emailtest as email
 
 
@@ -12,6 +13,9 @@ app.config['SECRET_KEY'] = 'TOPSECRETKEY'
 app.config['ADMINS'] = ['rgrphotogallery@gmail.com']
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+logging.basicConfig(filename="logs/info.log", filemode='a', level=logging.INFO, format='%(asctime)s | %(message)s')
+logging.basicConfig(filename="logs/error.log", filemode='a', level=logging.ERROR)
 # mail = Mail(app)
 
 
@@ -23,11 +27,17 @@ def load_user(user_id):
 @app.route('/', methods = ["GET", "POST"])
 def index():
     content = db.getContent()
-    print(content)
     if current_user.get_id():
-        role = db.getRoleUser(current_user.get_id())
+        role = current_user.get_role()
         return render_template('index.html', con = content, title = "ELL_KN", role=role[0])
     return render_template('index.html', con = content, title = "ELL_KN", role='USER')
+
+
+@app.route('/news/<id>')
+def news(id):
+    news = db.getNews(id)
+    print(news)
+    return render_template('news.html', title = news[0][1], news = news[0])
 
 
 @app.route('/error')
@@ -106,23 +116,36 @@ def changePassword():
 #     return render_template('reset_password.html')
 
 
-@app.route('/about')
-def about():
-    return render_template('about.html', title = "О НАС")
-
 @app.route('/contacts')
 def contacts():
     return render_template('contacts.html', title = "КОНТАКТЫ")
+
 
 @app.route('/printHouses')
 def printHouses():
     typo = db.getTypo()
     return render_template('printHouses.html', title = "ТИПОГРАФИИ", typo = typo)
 
+
 @app.route('/authors')
 def authors():
     authors = db.getAuthors()
     return render_template('authors.html', authors = authors, title = "АВТОРЫ")
+
+
+@app.route('/author/<id>')
+def author(id):
+    author = db.getAuthor(id)
+    print(news)
+    return render_template('author.html', title = author[0][1], author = author[0])
+
+
+@app.route('/createAuthor', methods = ["GET", "POST"])
+def createAuthor():
+    if request.method == "POST":
+        pass
+    return render_template('createAuthor.html', title = "ДОБАВИТЬ АВТОРА")
+
 
 @app.route('/orders')
 def orders():
@@ -130,9 +153,10 @@ def orders():
     myOrders = db.getMyOrders(current_user.get_id())
     return render_template('orders.html', title = "ЗАКАЗЫ", allOrders=allOrders, myOrders=myOrders )
 
+
 @app.route('/createNews',  methods = ["GET", "POST"])
 def createNews():
-    if current_user.is_authenticated and db.getRoleUser(current_user.get_id())[0] == 'ADMIN':
+    if current_user.is_authenticated and current_user.get_role() == 'ADMIN':
         if request.method == 'POST':
             db.createNews(request.form.get("title"),request.form.get("post"),request.form.get("file"),current_user.get_id())
             flash('Новость создана')
@@ -146,15 +170,57 @@ def createNews():
     
 @app.route('/createOrder',  methods = ["GET", "POST"])
 def createOrder():
-    if current_user.is_authenticated and db.getRoleUser(current_user.get_id())[0] == 'ADMIN':
+    if current_user.is_authenticated and (current_user.get_role() == 'ORGANIZATION' or current_user.get_role() == 'PRIVATE'):
+        typo = db.getTypo() 
+        print_types = db.getPrintTypes()
         if request.method == 'POST':
-            db.createOrder()
-            #СДЕЛАТЬ СТРАНИЦУ И ЗАПРОС ДЛЯ ДОБАВЛЕНИЯ ЗАКАЗА
-            flash('Заказ создан')
-            return redirect('/orders')
-        return render_template('createOrder.html', title = "СОЗДАТЬ ЗАКАЗ")
+            if request.form.get("typo") == "-1" or request.form.get("print_types") == "-1":
+                flash("Введите корректные данные")
+            else:
+                db.createOrder(current_user.get_id(), request.form.get("edName"), request.form.get("pageCount"),  request.form.get("tiraj"), request.form.get("typo"), request.form.get("print_types"), request.form.get("adress"))
+                flash('Заказ создан')
+                return redirect('/orders')
+        return render_template('createOrder.html', title = "СОЗДАТЬ ЗАКАЗ", typo = typo, print_types = print_types)
     else:
         flash('Вы не имеете достаточных прав для перехода на данную страницу')
         return redirect('/')    
     
+    
+@app.route('/users')
+def users():
+    if current_user.is_authenticated and current_user.get_role() == 'ADMIN':
+        users = db.getUsers()
+        return render_template('users.html', title = "ПОЛЬЗОВАТЕЛИ", users = users)    
+    else:
+        flash('Вы не имеете достаточных прав для перехода на данную страницу')
+        return redirect('/')
+    
+    
+@app.route('/edit/<id>', methods = ["POST", "GET"])
+def edit(id):
+    if current_user.is_authenticated and current_user.get_role() == 'ADMIN':
+        user = db.getUserById(id)
+        role = db.getRoles()
+        if request.method == "POST":
+            if request.form.get("role") == "-1":
+                flash("Введите корректные данные")
+            else:
+                if db.getAdminsCount()[0][0] == 1 and current_user.get_role() == 'ADMIN' and request.form.get("role") != 2:
+                    flash("Вы не можете изменить роль у единственного пользователя с ролью ADMIN")
+                else:
+                    db.changeUserData(request.form.get("lastname"), request.form.get("firstname"), request.form.get("email"), request.form.get("role"), id)
+                return render_template('edit.html', title = "РЕДАКТИРОВАТЬ", user = user, role = role)    
+            
+        return render_template('edit.html', title = "РЕДАКТИРОВАТЬ", user = user, role = role)    
+    else:
+        flash('Вы не имеете достаточных прав для перехода на данную страницу')
+        return redirect('/')    
+        
+    
+    
 app.run(debug=True)
+
+#cсделаь поиск ? проблема в том, где находится поисковая строка
+#сделать добавление заказа - уточнить по поводу функции
+#изменение страницы ?
+#добавление автора

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} ELL_KN - create authors {% endblock %}
+
+{% block content %}
+    <div class = 'authors'>
+        <form name = 'createAuthor' action = '/createAuthor' method = 'POST'>
+            <p><input class = 'input' type="text" name="name" placeholder = 'ФИО' min = "1" minlength = "2" maxlength = "3000" required></p>
+            <p><input class = 'input' type="textarea" name="info" placeholder = 'Информация' min = "1" minlength = "1" maxlength = "3000" required></p>
+            <label for="file">Выберите фото</label>
+            <p><input class = 'input' type="file" name="file"></p>
+            <p><input type = 'submit' class = "input" value = 'Добавить данные об авторе'></p>
+        </form>
+    </div>
+    
+{% endblock %}
