@@ -154,7 +154,6 @@ body {
     background: #ede1d0;
     display: inline-block;
     width: 50ex;
-    height: 50ex;
     margin: 5ex;
     padding: 4ex;
     box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -162,7 +161,7 @@ body {
 }
 
 .login{
-    height: 80ex;
+    padding-bottom: 5ex;
     position: relative;
 }
 
@@ -170,10 +169,10 @@ body {
 .registration {
     font-size: 2.5ex;
     width: 40ex;
-    height: 40ex;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 10ex;
 }
 
 .authorization .link,
@@ -200,6 +199,28 @@ body {
 .registration {
     height: 50ex;
 }
+
+.createOrder{
+    border-radius: 2ex;
+    background: #ede1d0;
+    display: inline-block;
+    width: 50ex;
+    margin: 5ex;
+    padding: 4ex;
+    box-shadow: 0 4ex 8ex rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    text-align: center;
+    font-size: 2.5ex;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10ex;
+}
+
+.createOrder:hover{
+    color: #ede1d0;
+    background-color: #10495c;
+}
+
 .go_to_top {
     position: fixed;
     right: 1ex;
@@ -226,7 +247,7 @@ body {
     border-color: #ede1d0;
 }
 .contacts{
-    height: 40ex;
+    margin-bottom: 10ex;
     color: #10495c;
     text-align: center;
     padding-top: 5ex;

@@ -22,9 +22,8 @@
                 {% if current_user.is_authenticated and current_user.get_role() == 'ADMIN'%}
                 <a class='link' href="/users">Пользователи</a>
                 {% endif %}
-                <a class='link' href="/printHouses">Типографии</a>
                 <a class='link' href="/authors">Авторы</a>
-                <a class='link' href="/contacts">Контакты</a>
+                <a class='link' href="/contacts">О нас</a>
                 {% if current_user.is_authenticated %}
                     <a class='link' href="/orders">Заказы</a>
                     <a id="button_a" class = "link" href="/logout">Выйти</a>

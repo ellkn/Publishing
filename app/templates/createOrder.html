@@ -2,6 +2,7 @@
 {% block title %} ELL_KN {% endblock %}
 
 {% block content %}
+
 <div class = "createOrder">
     <h4>Сделать заказ</h4>
     <form name = 'createOrder' action = '/createOrder' method = 'POST'>
@@ -9,19 +10,31 @@
         <p><input class = 'input' type="number" name="pageCount" placeholder = 'Количество страниц' min = "1" minlength = "1" maxlength = "3000" required></p>
         <p><input class = 'input' type="number" name="tiraj" placeholder = 'Тираж' minlength = "2" maxlength = "3000" required></p>
         <p><select name = "typo">
-            <option value = "-1"> - - -</option>
+            <option value = "-1">Выберите типографию</option>
             {% for item in typo%}
             <option value = "{{item[0]}}">{{item[1]}}</option>
             {%endfor%}
         </select></p>
         <p><select name = "print_types">
-            <option value = "-1"> - - -</option>
+            <option value = "-1"> Выберите вид изделия</option>
             {% for item in print_types%}
             <option value = "{{item[0]}}">{{item[1]}}</option>
             {%endfor%}
         </select></p>
-        <p><input class = 'input' type="text" name="adress" placeholder = 'Адрес заказчика' min = "1" minlength = "2" maxlength = "3000" required></p>
         <p><input type = 'submit' class = "input" value = 'Создать заказ'></p>
     </form>
+</div>
+
+<div class = "createOrder">
+    <p class = "infoHeader"> Как мы работаем над вашим изделием? </p>
+    <ul text-align = "left";>
+    <li>Получаем заявку</li>
+    <li>Обсуждаем план</li>
+    <li>Готовим концепцию</li>
+    <li>Рисуем иллюстрации</li>
+    <li>Создаем дизайн</li>
+    <li>Выпускаем Тираж</li>
+    <li>Продвигаем книгу</li>  
+    </ul>
 </div>
 {% endblock %}

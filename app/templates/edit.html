@@ -2,6 +2,7 @@
 {% block title %} ELL_KN {% endblock %}
 
 {% block content %}
+<div class = "createOrder">
 <form name = 'editUser' action = '/edit/{{user["id"]}}' method = 'POST'>
     <p><input class = 'input' type="text" name="lastname" value = '{{user["lastname"]}}' minlength = "2" maxlength = "3000" required></p>
     <p><input class = 'input' type="text" name="firstname" value = '{{user["firstname"]}}'  minlength = "2" maxlength = "3000" required></p>
@@ -14,4 +15,5 @@
     </select></p>
     <p><input type = 'submit' class = "input" value = 'Изменить данные пользователя'></p>
 </form>
+</div>
 {% endblock %}

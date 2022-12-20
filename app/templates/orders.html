@@ -2,18 +2,76 @@
 {% block title %} ELL_KN - orders {% endblock %}
 
 {% block content %}
-    {% if role == 'ADMIN'%}
-        <div class = 'about'>
-            {%for item in allOrders%}
-                {{item}}
-            {%endfor%}
-        </div>
+    {% if current_user.is_authenticated and current_user.get_role() == 'ADMIN'%}
+        <table class = "typo">
+            <thead>
+                <tr>
+                    <td>Номер заказа</td>
+                    <td>Контактное лицо</td>
+                    <td>Тип продукции</td>
+                    <td>Типография</td>
+                    <td>Название</td>
+                    <td>Количество страниц</td>
+                    <td>Тираж</td>
+                    <td>Начало</td>
+                    <td>Конец</td>
+                    <td>Стоимость</td>
+                    <td>Статус</td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for item in allOrders%}
+                <tr>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}} {{item[2]}} <a class = "contact" href="tel:{{item[3]}}">{{item[3]}}</a></td>
+                    <td>{{item[4]}}</td>
+                    <td>{{item[5]}} <a class = "contact" href="tel:{{item[6]}}">{{item[6]}}</a></td>
+                    <td>{{item[7]}}</td>
+                    <td>{{item[8]}}</td>
+                    <td>{{item[9]}}</td>
+                    <td>{{item[10]}}</td>
+                    <td>{{item[11]}}</td>
+                    <td>{{item[13][1:]}}</td>
+                    <td>{{item[12]}} <a class='lightlink' id = "status">Изменить статус</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
     {%else%}
         <a href="/createOrder" class="lightlink">Добавить заказ</a>
-        <div class = 'about'>
-            {%for item in myOrders%}
-                {{item}}
-            {%endfor%}
-        </div>
+        <table class = "typo">
+            <thead>
+                <tr>
+                    <td>Номер заказа</td>
+                    <td>Контактное лицо</td>
+                    <td>Тип продукции</td>
+                    <td>Типография</td>
+                    <td>Название</td>
+                    <td>Количество страниц</td>
+                    <td>Тираж</td>
+                    <td>Начало</td>
+                    <td>Конец</td>
+                    <td>Стоимость</td>
+                    <td>Статус</td>
+                </tr>
+            </thead>
+            <tbody>
+                {%for item in myOrders%}
+                <tr>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}} {{item[2]}} <a class = "contact" href="tel:{{item[3]}}">{{item[3]}}</a></td>
+                    <td>{{item[4]}}</td>
+                    <td>{{item[5]}} <a class = "contact" href="tel:{{item[6]}}">{{item[6]}}</a></td>
+                    <td>{{item[7]}}</td>
+                    <td>{{item[8]}}</td>
+                    <td>{{item[9]}}</td>
+                    <td>{{item[10]}}</td>
+                    <td>{{item[11]}}</td>
+                    <td>{{item[13][1:]}}</td>
+                    <td>{{item[12]}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
     {%endif%}
 {% endblock %}

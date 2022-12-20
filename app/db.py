@@ -7,13 +7,12 @@ import logging
 
 def getData(query):
     try:
-        connection = psycopg2.connect(host='localhost', user='postgres', password='1606',
-                                      dbname='pHouse', port=5432)
+        connection = psycopg2.connect(host='localhost', user='postgres', password='1606', dbname='pHouse', port=5432)
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
         return rows
-    except Exception as ex:
+    except (Exception, psycopg2.DatabaseError) as ex:
         logging.error(ex)
         print(ex)
     finally:
@@ -22,12 +21,11 @@ def getData(query):
 
 def setData(query):
     try:
-        connection = psycopg2.connect(host='localhost', user='postgres', password='1606',
-                                      dbname='pHouse', port=5432)
+        connection = psycopg2.connect(host='localhost', user='postgres', password='1606', dbname='pHouse', port=5432)
         cursor = connection.cursor()
         cursor.execute(query)
         connection.commit()
-    except Exception as ex:
+    except (Exception, psycopg2.DatabaseError) as ex:
         logging.error(ex)
         print(ex)
     finally:
@@ -51,10 +49,10 @@ def getNews(id):
         
 
         
-def createUser(login, password, firstname, lastname, role ):
+def createUser(login, password, firstname, lastname, role, phone ):
     password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
     try:
-        setData(f'INSERT INTO users (lastname, firstname, email, password, role) VALUES {lastname, firstname, login, password_hash, role}')
+        setData(f'INSERT INTO users (lastname, firstname, email, password, role, phone) VALUES {lastname, firstname, login, password_hash, role, phone}')
         flash('Пользователь успешно добавлен!')
     except Exception as error:
         logging.error(error)
@@ -95,7 +93,7 @@ def getUserByEmail(email):
         
 def getAllOrders():
     try:
-        return getData('SELECT o.id, u.lastname, u.firstname, p.name ptype, e.code, a.name author, e.name, e."pageCount", e.count_t, t.name typography,  o.date_in, o.date_out, s.name status, o.price FROM orders o JOIN order_takers ot  ON ot.users_id = o.order_taker_id JOIN users u  ON u.id = ot.users_id JOIN print_types p ON p.id = o.print_type JOIN editions e ON e.id = o.edition_id JOIN authors a ON a.id = e.author_id JOIN typographys t ON t.id = o.typography_id JOIN statuses s ON s.id = o.status_id ')
+        return getData('SELECT o.id, u.lastname, u.firstname, u.phone, p.name, t.name, t.phone, o."orderName", o."pageCount", o.edition, o.date_in, o.date_out, s.name, o.price FROM orders o JOIN users u on u.id = o.user_id JOIN print_types p on p.id = o.print_type JOIN typographys t on t.id = o."typography_id" JOIN statuses s on s.id = o.status_id')
     except Exception as ex:
         logging.error(ex)
         print(ex)
@@ -103,7 +101,7 @@ def getAllOrders():
 
 def getMyOrders(user_id):
     try:
-        return getData(f'SELECT o.id, u.lastname, u.firstname, p.name ptype, e.code, a.name author, e.name, e."pageCount", e.count_t, t.name typography,  o.date_in, o.date_out, s.name status, o.price FROM orders o JOIN order_takers ot  ON ot.users_id = o.order_taker_id JOIN users u  ON u.id = ot.users_id JOIN print_types p ON p.id = o.print_type JOIN editions e ON e.id = o.edition_id JOIN authors a ON a.id = e.author_id JOIN typographys t ON t.id = o.typography_id JOIN statuses s ON s.id = o.status_id WHERE order_taker_id = {user_id}')
+        return getData(f'SELECT o.id, u.lastname, u.firstname, u.phone, p.name, t.name, t.phone, o."orderName", o."pageCount", o.edition, o.date_in, o.date_out, s.name, o.price FROM orders o JOIN users u on u.id = o.user_id JOIN print_types p on p.id = o.print_type JOIN typographys t on t.id = o."typography_id" JOIN statuses s on s.id = o.status_id WHERE user_id = {user_id}')
     except Exception as ex:
         logging.error(ex)
         print(ex)
@@ -181,24 +179,22 @@ def createAuthor(name, info, photo):
         logging.error(ex)
    
    
+def getSummOfOrder(print_type, pageCount, tiraj):
+    price = getData(f"select price from print_types where id = {print_type}")[0][0][1:]
+    return (int(pageCount)*float(price)*int(tiraj))/10
+  
    
-def createOrder(userId, edName, pageCount, tiraj, typo, print_types, adress):
-    date = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    #date_out = 
+   
+def createOrder(userId, edName, pageCount, tiraj, typo, print_types):
+    date = datetime.datetime.now()
+    date_out = (date + datetime.timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')
+    price = getSummOfOrder(print_types, pageCount, tiraj)
     try:
-        order_taker = getData(f'SELECT * FROM order_takers WHERE users_id = {userId}')
-        if order_taker == []:
-            setData(f'INSERT INTO order_takers (users_id, adress) VALUES ({userId}, {adress})')
-        
-        #setData(f"INSERT INTO orders (order_taker_id, print_types, typography_id, date_in, date_out, status_id, price) VALUES ()")
-        #данные добавляются в ордертейкер
-        #сделать функцию. добавить в эдишн. вернуть айди в ордер. вернуть айди в эдишн
-        #данные добавляются в издание с этим ордером и затем обратно
-        
-        setData(f"")
+        setData(f"INSERT INTO orders (user_id, print_type, typography_id, \"orderName\", \"pageCount\", edition, date_in, date_out, status_id, price) VALUES ({userId}, {print_types}, {typo}, '{edName}', {pageCount}, {tiraj}, '{date}', '{date_out}', 6, {price})")
     except Exception as ex:
+        print(ex)
         logging.error(ex)
-        print(ex)     
+        
         
         
 def changeUserData(lastname, firstname, email, role, id):
@@ -209,7 +205,13 @@ def changeUserData(lastname, firstname, email, role, id):
         logging.error(ex)
    
                 
-        
+def addTypo(name, address, phone):
+    try:
+        setData(f"insert into typographys (name, address, phone) values ('{name}', '{address}', '{phone}') ")
+    except Exception as ex:
+        print(ex)
+        logging.error(ex)
+    pass       
 
 # def resetPassword(user_id, password):
 #     password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)

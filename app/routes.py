@@ -29,14 +29,13 @@ def index():
     content = db.getContent()
     if current_user.get_id():
         role = current_user.get_role()
-        return render_template('index.html', con = content, title = "ELL_KN", role=role[0])
-    return render_template('index.html', con = content, title = "ELL_KN", role='USER')
+        return render_template('index.html', con = content, title = "ИЗДАТЕЛЬСТВО - ELL_KN", role=role)
+    return render_template('index.html', con = content, title = "ИЗДАТЕЛЬСТВО - ELL_KN", role='USER')
 
 
 @app.route('/news/<id>')
 def news(id):
     news = db.getNews(id)
-    print(news)
     return render_template('news.html', title = news[0][1], news = news[0])
 
 
@@ -81,13 +80,18 @@ def registration():
         return redirect('/')
     else:
         if request.method == 'POST':
-            email = request.form.get('email')
-            password = request.form.get('password')
-            name = request.form.get('name')
-            lastname = request.form.get('lastname')
-            select = request.form.get('select')
-            db.createUser(email, password, name, lastname, select)
-            return redirect('/login')
+            if request.form.get("select") == "-1":
+                flash("Вы ввели некорректные данные, повторите попытку")
+                return render_template('registration.html', title = "РЕГИСТРАЦИЯ")
+            else:
+                email = request.form.get('email')
+                password = request.form.get('password')
+                name = request.form.get('name')
+                lastname = request.form.get('lastname')
+                select = request.form.get('select')
+                phone = request.form.get('phone')
+                db.createUser(email, password, name, lastname, select, phone)
+                return redirect('/login')
         return render_template('registration.html', title = "РЕГИСТРАЦИЯ")
 
 @app.route('/changePassword', methods = ['POST', 'GET'])
@@ -118,13 +122,8 @@ def changePassword():
 
 @app.route('/contacts')
 def contacts():
-    return render_template('contacts.html', title = "КОНТАКТЫ")
-
-
-@app.route('/printHouses')
-def printHouses():
     typo = db.getTypo()
-    return render_template('printHouses.html', title = "ТИПОГРАФИИ", typo = typo)
+    return render_template('contacts.html', title = "КОНТАКТЫ", typo = typo)
 
 
 @app.route('/authors')
@@ -136,7 +135,6 @@ def authors():
 @app.route('/author/<id>')
 def author(id):
     author = db.getAuthor(id)
-    print(news)
     return render_template('author.html', title = author[0][1], author = author[0])
 
 
@@ -177,7 +175,7 @@ def createOrder():
             if request.form.get("typo") == "-1" or request.form.get("print_types") == "-1":
                 flash("Введите корректные данные")
             else:
-                db.createOrder(current_user.get_id(), request.form.get("edName"), request.form.get("pageCount"),  request.form.get("tiraj"), request.form.get("typo"), request.form.get("print_types"), request.form.get("adress"))
+                db.createOrder(current_user.get_id(), request.form.get("edName"), request.form.get("pageCount"),  request.form.get("tiraj"), request.form.get("typo"), request.form.get("print_types"))
                 flash('Заказ создан')
                 return redirect('/orders')
         return render_template('createOrder.html', title = "СОЗДАТЬ ЗАКАЗ", typo = typo, print_types = print_types)
@@ -216,6 +214,20 @@ def edit(id):
         flash('Вы не имеете достаточных прав для перехода на данную страницу')
         return redirect('/')    
         
+    
+@app.route('/addTypo',  methods = ["GET", "POST"])
+def addTypo():
+    if current_user.is_authenticated and current_user.get_role() == 'ADMIN':
+        if request.method == 'POST':
+            db.addTypo(request.form.get('name'), request.form.get('address'), request.form.get('phone'))
+            flash('Типография добавлена!')
+            return redirect('/contacts')
+        return render_template('addTypo.html', title = "ДОБАВИТЬ ТИПОГРАФИЮ")
+    else:
+        flash('Вы не имеете достаточных прав для перехода на данную страницу')
+        return redirect('/')    
+        
+
     
     
 app.run(debug=True)
