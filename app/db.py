@@ -173,7 +173,7 @@ def createNews(title, post, file, user_id):
    
 def createAuthor(name, info, photo):
     try:
-        setData(f"INSERT INTO authors (name, info, photopath) VALUES ({name}, {info}, {photo})")
+        setData(f"INSERT INTO authors (name, info, photopath) VALUES ('{name}', '{info}', '{photo}')")
     except Exception as ex:
         print(ex)
         logging.error(ex)
@@ -212,6 +212,8 @@ def addTypo(name, address, phone):
         print(ex)
         logging.error(ex)
     pass       
+
+
 
 # def resetPassword(user_id, password):
 #     password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
