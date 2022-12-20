@@ -3,6 +3,7 @@
 
 {% block content %}
     {% if current_user.is_authenticated and current_user.get_role() == 'ADMIN'%}
+    <input class = "filter" type="text" id="myInput" onkeyup="myFunction()" placeholder="Ищите по названию товара.." title="По названию">
         <table class = "typo">
             <thead>
                 <tr>
@@ -19,7 +20,7 @@
                     <td>Статус</td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody  id = "myTable">
                 {%for item in allOrders%}
                 <tr>
                     <td>{{item[0]}}</td>

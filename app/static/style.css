@@ -236,6 +236,22 @@ body {
     border-radius: 3ex;
 }
 
+.filter{
+    border-radius: 2ex;
+    padding: 1ex;
+    font-weight: bold;
+    width: 100ex;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.filter:hover {
+    border-radius: 2ex;
+    border-color: #ede1d0;
+}
+
 .input {
     border-radius: 2ex;
     padding: 1ex;

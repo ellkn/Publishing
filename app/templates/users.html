@@ -2,23 +2,23 @@
 {% block title %} ELL_KN - admin users {% endblock %}
 
 {% block content %}
+<input class = "filter" type="text" id="myInputUser" onkeyup="myFunctionUser()" placeholder="Ищите по фамилии или имени" title="По фио">
+    
 <table class = "users" name = "users">
 
 <thead>
     <tr>
-        <td>Фамилия</td>
-        <td>Имя</td>
+        <td>Фамилия Имя</td>
         <td>Email</td>
         <td>Роль</td>
         <td>Действие</td>
     </tr>
 </thead>
 
-<tbody>
+<tbody id = "myTableUser">
     {%for item in users%}
     <tr>
-        <td>{{item[1]}}</td>
-        <td>{{item[2]}}</td>
+        <td>{{item[1]}} {{item[2]}}</td>
         <td>{{item[3]}}</td>
         <td>{{item[4]}}</td>
         <td><a class='lightlink' href="/edit/{{item[0]}}">Редактировать</a></td>
