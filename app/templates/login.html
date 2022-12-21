@@ -6,8 +6,8 @@
     <div class = "authorization">
         <h4>Авторизация</h4>
         <form name = 'login' action = '' method = 'POST'>
-            <p><input class = 'input' type="email" name="email" placeholder = 'Email'></p>
-            <p><input class = 'input' type="password" name="password" placeholder = 'Password'></p>
+            <p><input class = 'input' type="email" name="email" placeholder = 'Email'  minlength = "2" maxlength = "3000" required></p>
+            <p><input class = 'input' type="password" name="password" placeholder = 'Password'  minlength = "12" maxlength = "3000" required></p>
            <p> <input type = 'submit' class = "input" value = 'Войти'></p>
         </form>
         <p><a class = 'link' href="/registration">Регистрация</a>
