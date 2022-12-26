@@ -283,4 +283,9 @@ def response(site):
     return response
     
     
+@app.errorhandler(404)
+def pageNotFount(error):
+    return render_template('error.html', title="Страница не найдена")
+    
+    
 app.run(debug=True)
